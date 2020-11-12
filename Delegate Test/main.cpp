@@ -17,18 +17,26 @@ int main()
 	Test test1;
 	Test test2;
 
-	Delegate<void, int> setVecX(Vec2::setx);
-	Delegate<void, int> setVecY(Vec2::sety);
+	StaticDelegate<void, int> setVecX(Vec2::setx);
+	StaticDelegate<void, int> setVecY(Vec2::sety);
+
+	Delegate<Vec2, void> printVecDelegate(&testvec, &Vec2::printCoords);
+	Delegate<Vec2, void, int> testtestest(&testvec, &Vec2::test);
+    Delegate<Vec2, void, int, int, int> testtestest1(&testvec, &Vec2::test1);
+
 
 	Event<void, int> vecevents;
 	Event<void> voidevents;
 
 	vecevents += &setVecX;
 	vecevents += &setVecY;
+
 	vecevents.Invoke(1);
 
 	vecevents -= &setVecY;
 	vecevents.Invoke(10);
 
-	testvec.printCoords();
+	vecevents += &testtestest;
+
+	vecevents.Invoke(10);
 }

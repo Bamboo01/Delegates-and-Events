@@ -8,21 +8,21 @@ template<typename FunctionType, typename... params >
 class Event
 {
 private:
-	std::unordered_map <Delegate<FunctionType, params...>*, Delegate<FunctionType, params...>> DelegateList;
+	std::unordered_map <IDelegate<FunctionType, params...>*, IDelegate<FunctionType, params...>> DelegateList;
 
 public:
 
 	Event()
 	{
-		DelegateList = {};
+
 	}
 	
-	void operator+=(Delegate<FunctionType, params...>* a)
+	void operator+=(IDelegate<FunctionType, params...>* a)
 	{
 		DelegateList.insert(std::make_pair(a, *a));
 	}
 
-	void operator-=(Delegate<FunctionType, params...>* a)
+	void operator-=(IDelegate<FunctionType, params...>* a)
 	{
 		DelegateList.erase(a);
 	}

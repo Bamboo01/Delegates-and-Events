@@ -27,6 +27,16 @@ public:
 		y = a;
 	}
 
+	void test(int a)
+	{
+		std::cout << a << std::endl;
+	}
+
+	void test1(int a, int b, int c)
+	{
+
+	}
+
 	void printCoords()
 	{
 		std::cout << x << " " << y << std::endl;
