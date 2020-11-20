@@ -1,47 +1,24 @@
+#include "Delegate.h"
+
 #pragma once
 class Vec2
 {
 private:
-	static int x;
-	static int y;
+	int x;
+	int y;
+	static int numVec2;
+	Delegate<Vec2, void> myprintcoord;
 
 public:
-	Vec2()
-	{
-		x = 0;
-		y = 0;
-	}
+	Vec2();
 
-	~Vec2()
-	{
+	~Vec2();
 
-	}
+	void setx(int a);
 
-	static void setx(int a)
-	{
-		x = a;
-	}
+	void sety(int a);
 
-	static void sety(int a)
-	{
-		y = a;
-	}
+	void printCoords();
 
-	void test(int a)
-	{
-		std::cout << a << std::endl;
-	}
-
-	void test1(int a, int b, int c)
-	{
-
-	}
-
-	void printCoords()
-	{
-		std::cout << x << " " << y << std::endl;
-	}
+	static void printNumVec2();
 };
-
-int Vec2::x = 0;
-int Vec2::y = 0;
