@@ -7,6 +7,7 @@ int Vec2::numVec2 = 0;
 Vec2::Vec2()
 {
 	printcoordsdel.Set<Vec2>(this, &Vec2::printCoords);
+	printnumvec2del.Set(printNumVec2);
 	EventSystem::eventlist += printcoordsdel;
 	x = 0;
 	y = 0;

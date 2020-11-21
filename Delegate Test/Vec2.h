@@ -10,6 +10,7 @@ private:
 
 public:
 	Delegate<void> printcoordsdel;
+	Delegate<void> printnumvec2del;
 
 	Vec2();
 
