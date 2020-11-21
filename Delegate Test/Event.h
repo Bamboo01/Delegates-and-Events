@@ -2,14 +2,13 @@
 #include <list>
 #include <iostream>
 #pragma once
-//Made by sherwyn hey mr tang :D
 
-template<typename ClassType, typename FunctionType, typename... params>
+template<typename FunctionType, typename... params>
 class Event
 {
 private:
 	int DelegateCount;
-	std::list<Delegate<ClassType, FunctionType, params...>> DelegateList;
+	std::list<Delegate<FunctionType, params...>> DelegateList;
 
 public:
 
@@ -18,7 +17,7 @@ public:
 		DelegateCount = 0;
 	}
 	
-	void operator+=(const Delegate<ClassType, FunctionType, params...>& a)
+	void operator+=(const Delegate<FunctionType, params...>& a)
 	{
 		auto it = std::find(DelegateList.begin(), DelegateList.end(), a);
 		if (it == DelegateList.end())
@@ -32,7 +31,7 @@ public:
 		}
 	}
 
-	void operator-=(const Delegate<ClassType, FunctionType, params...>& a)
+	void operator-=(const Delegate<FunctionType, params...>& a)
 	{
 		auto it = std::find(DelegateList.begin(), DelegateList.end(), a);
 		if (it != DelegateList.end())

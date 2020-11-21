@@ -5,7 +5,7 @@
 class EventSystem
 {
 public:
-	static Event<Vec2, void> eventlist;
+	static Event<void> eventlist;
 
 	EventSystem()
 	{

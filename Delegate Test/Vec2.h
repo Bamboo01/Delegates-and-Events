@@ -7,9 +7,10 @@ private:
 	int x;
 	int y;
 	static int numVec2;
-	Delegate<Vec2, void> myprintcoord;
 
 public:
+	Delegate<void> printcoordsdel;
+
 	Vec2();
 
 	~Vec2();
@@ -19,6 +20,10 @@ public:
 	void sety(int a);
 
 	void printCoords();
+
+	void forceEventAdd();
+
+	void forceEventRemove();
 
 	static void printNumVec2();
 };

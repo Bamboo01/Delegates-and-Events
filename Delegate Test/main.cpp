@@ -14,4 +14,5 @@ int main()
 	}
 	EventSystem::eventlist.Invoke();
 	
+	std::cout << (aaa.printcoordsdel == aab.printcoordsdel) << std::endl;
 }

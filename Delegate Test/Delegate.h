@@ -1,6 +1,7 @@
 #include <functional>
 #include <unordered_map>
 #include <list>
+#include <assert.h>
 
 #pragma once
 /*
@@ -27,43 +28,23 @@ std::function<Ret(Ts...)> bind_this(const C* c, Ret(C::* m)(Ts...) const)
 	return [=](auto&&... args) { return (c->*m)(std::forward<decltype(args)>(args)...); };
 }
 
-template<typename ClassType, typename FunctionType, typename... params>
+template<typename FunctionType, typename... params>
 class Delegate
 {
 protected:
-	using MemberFunctionPointer = FunctionType(ClassType::*)(params...);
-
 	std::function<FunctionType(params...)> func;
-	ClassType* objectptr;
-	MemberFunctionPointer funcptr;
+
+	//THIS IS HIGHLY ILLEGAL YOU KNOW
+	//IT WORKS DOE
+	void* funcptr;
+	void* objectptr;
 
 public:
-	Delegate(ClassType* a, MemberFunctionPointer b)
-	{
-		//Member function
-		objectptr = a;
-		funcptr = b;
-		func = bind_this(a, b);
-	}
-
-	Delegate(FunctionType a(params...))
-	{
-		//Static function
-		objectptr = nullptr;
-		funcptr = nullptr;
-		this->func = a;
-	}
-
-	Delegate(const Delegate<ClassType, FunctionType, params...>& a)
-	{
-		this->func = a.func;
-		this->funcptr = a.funcptr;
-		this->objectptr = a.objectptr;
-	}
-
 	Delegate()
 	{
-
+		func = nullptr;
+		funcptr = nullptr;
+		objectptr = nullptr;
 	}
 
 	~Delegate()
@@ -73,10 +54,29 @@ public:
 
 	FunctionType Invoke(params... a)
 	{
+		assert(func != nullptr, "Delegate was not set up, but invokation was called!");
 		return func(a...);
 	}
 
-	bool operator== (const Delegate<ClassType, FunctionType, params...>& rhs) const
+	template <typename ClassType>
+	using MemberFunctionPointer = FunctionType(ClassType::*)(params...);
+
+	template <typename ClassType>
+	void Set(ClassType* a, MemberFunctionPointer<ClassType> b)
+	{
+		objectptr = a;
+		funcptr = &b;
+		func = bind_this(a, b);
+	}
+
+	void Set(FunctionType a(params...))
+	{
+		objectptr = nullptr;
+		funcptr = nullptr;
+		func = a;
+	}
+
+	bool operator== (const Delegate<FunctionType, params...>& rhs) const
 	{
 		if (this->objectptr == rhs.objectptr &&
 			this->funcptr == rhs.funcptr)
@@ -104,7 +104,7 @@ public:
 		}
 	}
 
-	Delegate<ClassType, FunctionType, params...>& operator=(const Delegate<ClassType, FunctionType, params...>& other)
+	Delegate<FunctionType, params...>& operator=(const Delegate<FunctionType, params...>& other)
 	{
 		this->func = other.func;
 		this->funcptr = other.funcptr;
