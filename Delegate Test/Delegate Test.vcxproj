@@ -138,15 +138,15 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="EventSystem.cpp" />
-    <ClCompile Include="main.cpp" />
-    <ClCompile Include="Vec2.cpp" />
+    <ClCompile Include="Source\EventSystem.cpp" />
+    <ClCompile Include="Source\main.cpp" />
+    <ClCompile Include="Source\Vec2.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Delegate.h" />
-    <ClInclude Include="Event.h" />
-    <ClInclude Include="EventSystem.h" />
-    <ClInclude Include="Vec2.h" />
+    <ClInclude Include="Source\Delegate.h" />
+    <ClInclude Include="Source\Event.h" />
+    <ClInclude Include="Source\EventSystem.h" />
+    <ClInclude Include="Source\Vec2.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

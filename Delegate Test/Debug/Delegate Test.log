@@ -1,8 +1,3 @@
-﻿  EventSystem.cpp
-C:\Users\USER\source\repos\Delegate Test\Delegate Test\Delegate.h(57,3): warning C4002: too many arguments for function-like macro invocation 'assert'
-  Vec2.cpp
-C:\Users\USER\source\repos\Delegate Test\Delegate Test\Delegate.h(57,3): warning C4002: too many arguments for function-like macro invocation 'assert'
-  main.cpp
-C:\Users\USER\source\repos\Delegate Test\Delegate Test\Delegate.h(57,3): warning C4002: too many arguments for function-like macro invocation 'assert'
-  Generating Code...
+﻿  Vec2.cpp
+C:\Users\USER\source\repos\Delegate Test\Delegate Test\Source\Delegate.h(61,3): warning C4002: too many arguments for function-like macro invocation 'assert'
   Delegate Test.vcxproj -> C:\Users\USER\source\repos\Delegate Test\Debug\Delegate Test.exe
