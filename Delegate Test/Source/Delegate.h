@@ -2,6 +2,9 @@
 #include <unordered_map>
 #include <list>
 #include <assert.h>
+#include <typeinfo>
+#include <iostream>
+
 
 #pragma once
 /*
@@ -37,18 +40,15 @@ private:
 
 protected:
 	std::function<FunctionType(params...)> func;
-
-	//THIS IS HIGHLY ILLEGAL YOU KNOW
-	//IT WORKS DOE
-	void* funcptr;
-	void* objectptr;
+	uintptr_t funcptr;
+	uintptr_t objectptr;
 
 public:
 	Delegate()
 	{
 		func = nullptr;
-		funcptr = nullptr;
-		objectptr = nullptr;
+		funcptr = 0x0;
+		objectptr = 0x0;
 	}
 
 	~Delegate()
@@ -58,7 +58,7 @@ public:
 
 	FunctionType Invoke(params... a)
 	{
-		assert(func != nullptr, "Delegate was not set up, but invokation was called!");
+		assert(func != nullptr && "Delegate was not set up, but invocation was called!");
 		return func(a...);
 	}
 
@@ -66,38 +66,26 @@ public:
 	void Set(ClassType* a, MemberFunctionPointer<ClassType> b)
 	{
 		func = bind_this(a, b);
-		objectptr = a;
-		funcptr = &b;
+		objectptr = (uintptr_t)a;
+		funcptr = *reinterpret_cast<uintptr_t*>(&b);
 	}
 
 	void Set(FunctionType a(params...))
 	{
-		objectptr = nullptr;
+		objectptr = (uintptr_t)nullptr;
 		func = a;
-		funcptr = *a;
+		funcptr = reinterpret_cast<uintptr_t>(a);
 	}
 
 	bool operator== (const Delegate<FunctionType, params...>& rhs) const
 	{
-		if ((!this->objectptr && rhs.objectptr) || (this->objectptr && !rhs.objectptr))
-		{
-			return false;
-		}
-		else if (this->objectptr != rhs.objectptr)
-		{
-			return false;
-		}
-		else
-		{
-			if (this->funcptr == rhs.funcptr)
-			{
-				return true;
-			}
-			else
-			{
-				return false;
-			}
-		}
+		// Check if the delegates both point to the same object
+		// If they don't, continue
+		if (this->objectptr != rhs.objectptr) return false;
+
+		// Both the functions are either static or from the same object
+		// We just need to check if the function pointer is the same
+		return this->funcptr == rhs.funcptr;
 	}
 
 	Delegate<FunctionType, params...>& operator=(const Delegate<FunctionType, params...>& other)

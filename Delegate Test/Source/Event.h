@@ -19,16 +19,8 @@ public:
 	
 	void operator+=(const Delegate<FunctionType, params...>& a)
 	{
-		auto it = std::find(DelegateList.begin(), DelegateList.end(), a);
-		if (it == DelegateList.end())
-		{
-			DelegateList.push_back(a);
-			DelegateCount++;
-		}
-		else
-		{
-			std::cout << "Trying to add a delegate that already exists!" << std::endl;
-		}
+		DelegateList.push_back(a);
+		DelegateCount++;
 	}
 
 	void operator-=(const Delegate<FunctionType, params...>& a)

@@ -1,3 +1,0 @@
-﻿  Vec2.cpp
-C:\Users\USER\source\repos\Delegate Test\Delegate Test\Source\Delegate.h(61,3): warning C4002: too many arguments for function-like macro invocation 'assert'
-  Delegate Test.vcxproj -> C:\Users\USER\source\repos\Delegate Test\Debug\Delegate Test.exe

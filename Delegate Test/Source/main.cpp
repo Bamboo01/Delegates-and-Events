@@ -1,37 +1,40 @@
 #include "Vec2.h"
 #include "EventSystem.h"
+#include "Delegate.h"
+#include "Event.h"
+#include <string>
+
+using namespace std;
+
+static void test(string aaa)
+{
+	cout << aaa << "\n";
+	return;
+}
 
 int main()
 {
-	/*
-	*** QUICK EXPLANATION ***
-	EventSystem is a singleton
+	string nigga;
+	Delegate<void, string> str_func;
+	Delegate<void, string> str_func1;
+	Delegate<void, string> str_func2;
+	Delegate<void, string> str_func3;
+	Delegate<void, string> str_func4;
 
-	Vec2 constructor always calls the EventSystem instance to add the printcoordinate delegate to it
-	printcoordinatedel contains the functor to print current coordinates
+	str_func.Set(&test);
+	str_func1.Set(&test);
+	str_func2.Set(&test);
+	str_func3.Set(&test);
+	str_func4.Set(&test);
 
-	You should see an error when running that the same delegate is always being added
-	This is because it is trying to add a delegate to a static function
-	*/
-	Vec2 aaa;
-	Vec2 aab;
-	aaa.setx(1);
-	aab.sety(10);
-	{
-		Vec2 abb;
-		Vec2 bbb;
-		//aaa, aab, abb, bbb have printcoords called
-		EventSystem::PrintVec2CoordEvent.Invoke();
-	}
-	//only aaa and aab have printcoords called
-	EventSystem::PrintVec2CoordEvent.Invoke();
-	
-	//Meant to show that the delegates are different due to them belonging to different objects, despite having the same functor
-	std::cout << "(aaa.printcoordsdel == aab.printcoordsdel) = " << (aaa.printcoordsdel == aab.printcoordsdel) << std::endl;
+	Event<void, string> str_event;
+	str_event += str_func;
+	str_event += str_func1;
+	str_event += str_func2;
+	str_event += str_func3;
+	str_event += str_func4;
 
-	//Meant to show that the delegates are the same due to them pointing to a static function
-	std::cout << "(aaa.printnumvec2del == aab.printnumvec2del) = " << (aaa.printnumvec2del == aab.printnumvec2del) << std::endl;
+	str_event.Invoke("TTNEJITNEKT");
 
-	//Meant to show that the delegates are different due to them having different funtors, despite belonging to the same object
-	std::cout << "(aaa.printnumvec2del == aaa.printcoordsdel) = " << (aaa.printnumvec2del == aaa.printcoordsdel) << std::endl;
+	return 0;
 }
