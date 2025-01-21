@@ -4,6 +4,7 @@
 #include <assert.h>
 #include <typeinfo>
 #include <iostream>
+#include <immintrin.h>
 
 
 #pragma once
@@ -70,7 +71,7 @@ public:
 		funcptr = *reinterpret_cast<uintptr_t*>(&b);
 	}
 
-	void Set(FunctionType a(params...))
+	void Set(FunctionType a(params...))	
 	{
 		objectptr = (uintptr_t)nullptr;
 		func = a;
